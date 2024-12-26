@@ -1,4 +1,4 @@
-from helpers.priority_queue import PriorityQueue
+from ..helpers.priority_queue import PriorityQueue
 
 class HuffmanNode:
     """
@@ -35,3 +35,20 @@ class HuffmanTree:
             priority_queue.insert(merged)
 
         return priority_queue.pop()
+
+    def generate_codes(self, node=None, prefix="", codes=None):
+        """
+        Recursively generates Huffman codes from the tree.
+        """
+        if codes is None:
+            codes = {}
+        if node is None:
+            node = self.root
+
+        if node.char is not None:  # Leaf node
+            codes[node.char] = prefix
+        else:
+            self.generate_codes(node.left, prefix + "0", codes)
+            self.generate_codes(node.right, prefix + "1", codes)
+
+        return codes
